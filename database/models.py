@@ -2,7 +2,7 @@ from .db import db
 
 #Data Model for Books
 class Books(db.Document):
-    _id = db.IntField()
+    b_id = db.IntField(required=True, unique=True)
     author = db.StringField(required=True)
     country = db.StringField(required=True)
     imageLink = db.StringField(required=True)
