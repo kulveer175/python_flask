@@ -1,6 +1,7 @@
 from flask import Response, request
 from database.models import Books
 from flask_restful import Resource
+from flask_jwt_extended.view_decorators import jwt_required
 
 class BooksAPI(Resource):
 
@@ -21,11 +22,13 @@ class SingleBookAPI(Resource):
         book = Books.objects.get(b_id=id).to_json()
         return Response(book, mimetype="applicaiton/json", status=200)
 
+    @jwt_required
     def put(self, id):
         body = request.get_json()
         Books.objects.get(b_id=id).update(**body)
         return 'book updated', 200
     
+    @jwt_required
     def delete(self, id):
         book = Books.objects.get(b_id=id)
         book.delete()
